@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
+
 const Login = ()=>{
 const history = useHistory();
 const [email, setEmail] = useState('');
 const [password,SetPassword] = useState('');
+
+useEffect(() =>{
+    const login = localStorage.getItem('dataLoginAdmin');
+    if(login){
+        history.push('/list-video-admin');
+    }
+},[]);
+
+
 const handleSubmit = (e)=> {
     e.preventDefault();
     const dataSend = {
@@ -16,16 +26,17 @@ const handleSubmit = (e)=> {
     }else{
         fetch(`${process.env.REACT_APP_API}/loginAdmin`,{
             method:'POST',
-            body:JSON.stringify(dataSend),
             headers:{
-                'Content-Type'  : 'Application/json'
-            }
+                'Content-Type'  : 'application/json'
+            },
+            body:JSON.stringify(dataSend)
+            
         })
         .then(res => res.json())
         .then(hasil => {
             console.log(hasil)
-            localStorage.setItem('datLoginAdmin',hasil.token);
-            history.push('/list-video-admin');
+            localStorage.setItem('dataLoginAdmin',hasil.token);
+           history.push('/list-video-admin');
         })
         .catch(err =>{
             alert(err)

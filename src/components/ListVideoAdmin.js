@@ -1,4 +1,31 @@
+import { useEffect } from "react";
+
 const ListVideoAdmin = () =>{
+    // const [dataListVideo, setDataListVideo] = useState([]);
+    useEffect(() =>{
+        getData()
+    },[]);
+    
+    const getData = () =>{
+    const token = localStorage.getItem('dataLoginAdmin');
+    const sendData = {
+        token
+    }
+    fetch(`${process.env.REACT_APP_API}/listKonten`,{
+        method:'POST',
+        body: JSON.stringify(sendData),
+        headers:{
+            "Content-Type" : "application-Json"
+        }
+    })
+    .then(res => res.json())
+    .then(hasil =>{
+        console.log('data',hasil)
+    })
+    .catch(err => {
+        alert(err)
+    })
+    }
     return(
     <>
         <div className="jumbotron">
