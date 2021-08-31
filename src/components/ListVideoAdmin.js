@@ -3,7 +3,7 @@ import {Modal, Button} from 'react-bootstrap';
 import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react-dom";
 import ReactPlayer from "react-player/lazy";
 import swal from "sweetalert";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const ListVideoAdmin = () =>{
     const history = useHistory();
@@ -52,7 +52,12 @@ const ListVideoAdmin = () =>{
     .then(res => res.json())
     .then(hasil =>{
         console.log('data',hasil)
+       if(hasil.status=== 'berhasil'){
         setDataListVideo(hasil.data)
+        }else{
+            history.push('/login-admin');
+            localStorage.removeItem('dataLoginAdmin');
+        }
     })
     .catch(err => {
         alert(err)
@@ -370,11 +375,12 @@ const ListVideoAdmin = () =>{
             {/* <hr className="my-4"> */}
             <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
             <button onClick={()=> setLgShow(true)} className="btn btn-primary btn-lg" href="#" role="button">Tambah Video</button>
+            <Link to="/list-users" className="btn btn-success btn-lg ml-3" href="#" role="button">Users</Link>
         </div>
 
         <div className="row justify-content-center">
         {
-            dataListVideo.map((data, index)=>{
+            dataListVideo?dataListVideo.map((data, index)=>{
                 return(
             <div key={index} className="card m-3 col-md-4 col-lg-3" style={{width:'18rem',height:'auto',border:'none'}}>
                 <img
@@ -389,7 +395,7 @@ const ListVideoAdmin = () =>{
                 </div>
             </div>
                 )
-            })
+            }):'Data Kosong'
         }
         
        
