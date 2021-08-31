@@ -35,8 +35,10 @@ const handleSubmit = (e)=> {
         .then(res => res.json())
         .then(hasil => {
             console.log(hasil)
-            localStorage.setItem('dataLoginAdmin',hasil.token);
-           history.push('/list-video-admin');
+            if(hasil.status==='Berhasil'){
+                localStorage.setItem('dataLoginAdmin',hasil.token);
+                history.push('/list-video-admin');
+            }
         })
         .catch(err =>{
             alert(err)
