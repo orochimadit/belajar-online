@@ -185,6 +185,10 @@ const ListVideoAdmin = () =>{
             alert(err)
         })
     }
+    const logOut = () =>{
+      localStorage.removeItem('dataLoginAdmin');
+      history.push('/login-admin')
+    }
     return(
     <>
 
@@ -376,6 +380,7 @@ const ListVideoAdmin = () =>{
             <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
             <button onClick={()=> setLgShow(true)} className="btn btn-primary btn-lg" href="#" role="button">Tambah Video</button>
             <Link to="/list-users" className="btn btn-success btn-lg ml-3" href="#" role="button">Users</Link>
+            <button onClick={()=> logOut()} className="btn btn-danger btn-lg ml-3" href="#" role="button">Logout</button>
         </div>
 
         <div className="row justify-content-center">
